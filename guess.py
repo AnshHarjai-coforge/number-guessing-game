@@ -2,7 +2,7 @@ import random
 import time
 
 # ---------- Settings ----------
-DEBUG_SECRET = None   # For testing, set to a number such as 42. Set back to None before your final commit.
+DEBUG_SECRET = 42   # For testing, set to a number such as 42. Set back to None before your final commit.
 TIME_LIMIT = 60       # Seconds allowed in Time Challenge mode
 
 # Range sets the lower and upper bound for the guessing game
@@ -12,7 +12,10 @@ RANGE = [1, 50]
 COMPUTER_PICK = random.randint(RANGE[0], RANGE[1])
 
 # Maximum number of attempts a user can make in one game.
-NUM_ATTEMPTS = 10
+# NUM_ATTEMPTS = 10
+
+# Count How many attempts it takes a human to win
+attempts = 0
 
 # This variable is the result for this round: True -> You won; False -> You lost
 win = False
@@ -35,11 +38,14 @@ print("Welcome to the Number Guessing Game")
 # ---------- Guess loop ----------
 # Goal: keep asking for guesses until the player wins, runs out of attempts, or runs out of time.
 
-# A while loop that ends when a user finished the attempts, or if the human wins.
-while NUM_ATTEMPTS > 0 or win != True:
+# A while loop that ends when the user wins.
+while win != True:
 
-    print(f"\nYou have {NUM_ATTEMPTS} attempts remaining.")
-    NUM_ATTEMPTS -= 1
+    # print(f"\nYou have {NUM_ATTEMPTS} attempts remaining.")
+    # NUM_ATTEMPTS -= 1
+    
+    attempts += 1
+    print(f"\nThis is your {attempts} attempt\n")
 
     human_guess = input(f"Enter a number between {RANGE[0]} and {RANGE[1]}.")
 
