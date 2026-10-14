@@ -32,6 +32,16 @@ print("Welcome to the Number Guessing Game")
 
 # ---------- Choose a level ----------
 # Goal: keep asking until the player picks a valid level, then set the range and attempt limit.
+difficulty_level = input("Enter a difficulty level for your game: easy -> 1, medium -> 2 or hard -> 3")
+
+# Make a hash-set with the valid options for difficulty level
+valid_difficulties = {"1", "2", "3"}
+
+# Keep on prompting the user to enter a valid difficulty level
+while difficulty_level not in valid_difficulties:
+    print(f"{difficulty_level} is not a valid difficulty level.")
+    difficulty_level = input("Please enter a difficulty level for your game: easy -> 1, medium -> 2 or hard -> 3")
+
 
 # ---------- Choose a mode ----------
 # Goal: keep asking until the player picks Classic or Time Challenge.
