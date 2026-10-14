@@ -35,5 +35,28 @@ print("Welcome to the Number Guessing Game")
 # ---------- Guess loop ----------
 # Goal: keep asking for guesses until the player wins, runs out of attempts, or runs out of time.
 
+# A while loop that ends when a user finished the attempts, or if the human wins.
+while NUM_ATTEMPTS > 0 or win != True:
+
+    print(f"\nYou have {NUM_ATTEMPTS} attempts remaining.")
+    NUM_ATTEMPTS -= 1
+
+    human_guess = input(f"Enter a number between {RANGE[0]} and {RANGE[1]}.")
+
+    # This loop ends as soon as the human enters a valid number inside the range.
+    # We are using this loop so that we are counting invalid human guesses in the number of attempts.
+    while True:
+        # Check if the human guess is a number, if it is a number, check if it is within the range
+        if not str(human_guess).isdigit() or int(human_guess) < RANGE[0] or int(human_guess) > RANGE[1]:
+            human_guess = input(f"Please enter a number between {RANGE[0]} and {RANGE[1]}.")
+
+        # Else case -> Valid human guess.
+        else:
+            human_guess = int(human_guess)
+            # Exit the while loop
+            break
+    
+    
+
 # ---------- End of round ----------
 # Goal: show the result that matches how the round ended.
