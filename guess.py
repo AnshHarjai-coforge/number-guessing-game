@@ -5,10 +5,17 @@ import time
 DEBUG_SECRET = None   # For testing, set to a number such as 42. Set back to None before your final commit.
 TIME_LIMIT = 60       # Seconds allowed in Time Challenge mode
 
+# Range sets the lower and upper bound for the guessing game
 RANGE = [1, 50]
+
+# Randomly pick a number from the range
 COMPUTER_PICK = random.randint(RANGE[0], RANGE[1])
+
+# Maximum number of attempts a user can make in one game.
 NUM_ATTEMPTS = 10
 
+# This variable is the result for this round: True -> You won; False -> You lost
+win = False
 
 
 print("Welcome to the Number Guessing Game")
