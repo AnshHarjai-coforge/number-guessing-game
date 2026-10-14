@@ -4,6 +4,7 @@ import time
 # ---------- Settings ----------
 DEBUG_SECRET = 42   # For testing, set to a number such as 42. Set back to None before your final commit.
 TIME_LIMIT = 60       # Seconds allowed in Time Challenge mode
+random.seed(DEBUG_SECRET)
 
 # Range sets the lower and upper bound for the guessing game
 RANGE = [1, 50]
@@ -76,3 +77,5 @@ while not win:
 
 # ---------- End of round ----------
 # Goal: show the result that matches how the round ended.
+if win:
+    print(f"You have won the game in {attempts} attempts!")
