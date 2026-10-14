@@ -15,3 +15,8 @@ Test Plan for difficulty level:
 1. Enter invalid difficulty levels -> strings, empty string, numbers except (1, 2, or 3), special characters.
 2. Make sure that game ends after maximum_attempts is exhausted for each difficulty level.
 3. Re-run most manual tests from classic game like boundary checking for range for each difficulty level.
+
+## Testing plan for Time-Challenge branch
+1. Enter invalid game modes -> strings, empty string, numbers except (1, 2, or 3), special characters.
+2. Make sure that the timer is only activate when the user selects time challenge game mode.
+3. Check if the user is able to win a game when the timer has expired even with a correct answer.

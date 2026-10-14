@@ -3,7 +3,7 @@ import time
 
 # ---------- Settings ----------
 DEBUG_SECRET = 42  # For testing, set to a number such as 42. Set back to None before your final commit.
-TIME_LIMIT = 6       # Seconds allowed in Time Challenge mode
+TIME_LIMIT = 60       # Seconds allowed in Time Challenge mode
 
 
 # Count How many attempts it takes a human to win
@@ -57,7 +57,7 @@ valid_game_modes = {"1": "Classic", "2": "Time Challenge"}
 
 # Keep on prompting the user to enter a valid game mode.
 while game_mode not in valid_game_modes:
-    game_mode = input("Please enter a difficulty level for your game: Classic -> 1, Time Challenge -> 2: ")
+    game_mode = input("Please enter a game mode for your game: Classic -> 1, Time Challenge -> 2: ")
 
 print(f"\nYou have chosen {valid_game_modes[game_mode]} game mode")
 
@@ -84,6 +84,12 @@ while attempts < maximum_attempts and not win:
     # Display remaining time to user if time challenge game mode is selected
     if game_mode == "2":
         elapsed_time = time.time() - start_time
+
+        # Check if time is up before asking user for a new input.
+        if elapsed_time > TIME_LIMIT:
+            print("You ran out of time!")
+            break
+
         time_remaining = TIME_LIMIT - elapsed_time
         print(f"\nYou have {time_remaining:.2f} seconds remaining.\n")
 
