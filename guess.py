@@ -55,6 +55,7 @@ maximum_attempts = MAX_ATTEMPTS[difficulty_level]
 game_mode = input("Enter a difficulty level for your game: Classic -> 1, Time Challenge -> 2: ")
 valid_game_modes = {"1": "Classic", "2": "Time Challenge"}
 
+# Keep on prompting the user to enter a valid game mode.
 while game_mode not in valid_game_modes:
     game_mode = input("Please enter a difficulty level for your game: Classic -> 1, Time Challenge -> 2: ")
 
@@ -67,9 +68,11 @@ if DEBUG_SECRET is not None:
 else:
     COMPUTER_PICK = random.randint(minimum_number, maximum_number)
 
+# Start a timer if user selected time challenge game mode.
 if game_mode == "2":
     print("Your time begins now.")
     start_time = time.time()
+
 # ---------- Guess loop ----------
 # Goal: keep asking for guesses until the player wins, runs out of attempts, or runs out of time.
 
@@ -77,7 +80,8 @@ if game_mode == "2":
 while attempts < maximum_attempts and not win:
     print("-" * 100)
     print(f"\nYou have {maximum_attempts - attempts } attempts remaining.\n")
-    
+
+    # Display remaining time to user if time challenge game mode is selected
     if game_mode == "2":
         elapsed_time = time.time() - start_time
         time_remaining = TIME_LIMIT - elapsed_time
@@ -101,6 +105,8 @@ while attempts < maximum_attempts and not win:
             # Exit the while loop
             break
 
+    # Check if the time has elapsed before checking user's answer to make sure user has answered
+    # within the time limit.
     if game_mode == "2":
         elapsed_time = time.time() - start_time
         if elapsed_time > TIME_LIMIT:
