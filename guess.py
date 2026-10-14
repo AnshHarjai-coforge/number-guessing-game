@@ -13,9 +13,6 @@ if DEBUG_SECRET is not None:
 else:
     COMPUTER_PICK = random.randint(RANGE[0], RANGE[1])
 
-# Maximum number of attempts a user can make in one game.
-# NUM_ATTEMPTS = 10
-
 # Count How many attempts it takes a human to win
 attempts = 0
 
@@ -41,11 +38,21 @@ while difficulty_level not in valid_difficulties:
     difficulty_level = input("Please enter a difficulty level for your game: easy -> 1, medium -> 2 or hard -> 3")
 
 # Set a range dictionary based on difficulty level
+# maps: difficulty_level -> [min_element, maximum_element]
 RANGE = {
     "1": [1, 50],
     "2": [1, 100],
     "3": [1, 500],
 }
+
+# Set maximum number of attempts for a user based on difficulty level
+# maps: difficulty_level -> maximum_no_of_attempts
+MAX_ATTEMPTS = {
+    "1": 10,
+    "2": 8, 
+    "3": 10,
+}
+
 
 # ---------- Choose a mode ----------
 # Goal: keep asking until the player picks Classic or Time Challenge.
