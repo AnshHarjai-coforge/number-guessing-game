@@ -2,8 +2,8 @@ import random
 import time
 
 # ---------- Settings ----------
-DEBUG_SECRET = None  # For testing, set to a number such as 42. Set back to None before your final commit.
-TIME_LIMIT = 60       # Seconds allowed in Time Challenge mode
+DEBUG_SECRET = 42  # For testing, set to a number such as 42. Set back to None before your final commit.
+TIME_LIMIT = 6       # Seconds allowed in Time Challenge mode
 
 
 # Count How many attempts it takes a human to win
@@ -49,28 +49,39 @@ MAX_ATTEMPTS = {
 
 minimum_number, maximum_number = RANGE[difficulty_level]
 maximum_attempts = MAX_ATTEMPTS[difficulty_level]
+    
+# ---------- Choose a mode ----------
+# Goal: keep asking until the player picks Classic or Time Challenge.
+game_mode = input("Enter a difficulty level for your game: Classic -> 1, Time Challenge -> 2: ")
+valid_game_modes = {"1": "Classic", "2": "Time Challenge"}
 
-# If debug secret has a value, set the computer pick equal to it, otherwise keep it random.
-# This is done for testing multiple computer guesses for manual testing
+while game_mode not in valid_game_modes:
+    game_mode = input("Please enter a difficulty level for your game: Classic -> 1, Time Challenge -> 2: ")
+
+print(f"\nYou have chosen {valid_game_modes[game_mode]} game mode")
+
+# ---------- Set up the round ----------
+# Goal: pick the secret number (use DEBUG_SECRET when it is not None) and start the clock.
 if DEBUG_SECRET is not None:
     COMPUTER_PICK = DEBUG_SECRET
 else:
     COMPUTER_PICK = random.randint(minimum_number, maximum_number)
 
-    
-# ---------- Choose a mode ----------
-# Goal: keep asking until the player picks Classic or Time Challenge.
-
-# ---------- Set up the round ----------
-# Goal: pick the secret number (use DEBUG_SECRET when it is not None) and start the clock.
-
+if game_mode == "2":
+    print("Your time begins now.")
+    start_time = time.time()
 # ---------- Guess loop ----------
 # Goal: keep asking for guesses until the player wins, runs out of attempts, or runs out of time.
 
 # A while loop that ends when the user finishes all attempts or if the user wins.
 while attempts < maximum_attempts and not win:
-    
+    print("-" * 100)
     print(f"\nYou have {maximum_attempts - attempts } attempts remaining.\n")
+    
+    if game_mode == "2":
+        elapsed_time = time.time() - start_time
+        time_remaining = TIME_LIMIT - elapsed_time
+        print(f"\nYou have {time_remaining:.2f} seconds remaining.\n")
 
     human_guess = input(f"Enter a number between {minimum_number} and {maximum_number}.  ")
 
@@ -89,6 +100,12 @@ while attempts < maximum_attempts and not win:
             human_guess = int(human_guess)
             # Exit the while loop
             break
+
+    if game_mode == "2":
+        elapsed_time = time.time() - start_time
+        if elapsed_time > TIME_LIMIT:
+            print("You ran out of time!")
+            break
     
     # Add logic to see if user's number is bigger, smaller, or equal than computer's guess
     if human_guess > COMPUTER_PICK:
@@ -105,4 +122,5 @@ while attempts < maximum_attempts and not win:
 if win:
     print(f"You have won the game in {attempts} attempts!")
 else:
-    print(f"You ran out of attempts this time! Try again on a lower difficulty.")
+    print(f"You Lost! Try again on a lower difficulty.")
+    print(f"The secret number was {COMPUTER_PICK}")
