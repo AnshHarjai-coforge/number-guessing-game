@@ -4,14 +4,16 @@ import time
 # ---------- Settings ----------
 DEBUG_SECRET = 42   # For testing, set to a number such as 42. Set back to None before your final commit.
 TIME_LIMIT = 60       # Seconds allowed in Time Challenge mode
-random.seed(DEBUG_SECRET)
 
 # Range sets the lower and upper bound for the guessing game
 RANGE = [1, 50]
 
-# Randomly pick a number from the range
-COMPUTER_PICK = random.randint(RANGE[0], RANGE[1])
-print(COMPUTER_PICK)
+# If debug secret has a value, set the computer pick equal to it, otherwise keep it random.
+# This is done for testing multiple computer guesses for manual testing
+if DEBUG_SECRET is not None:
+    COMPUTER_PICK = DEBUG_SECRET
+else:
+    COMPUTER_PICK = random.randint(RANGE[0], RANGE[1])
 
 # Maximum number of attempts a user can make in one game.
 # NUM_ATTEMPTS = 10
@@ -46,13 +48,12 @@ while not win:
     # print(f"\nYou have {NUM_ATTEMPTS} attempts remaining.")
     # NUM_ATTEMPTS -= 1
     
-    attempts += 1
-    print(f"\nThis is your {attempts} attempt\n")
+    print(f"\nThis is your {attempts + 1 } attempt\n")
 
     human_guess = input(f"Enter a number between {RANGE[0]} and {RANGE[1]}.  ")
 
     # This loop ends as soon as the human enters a valid number inside the range.
-    # We are using this loop so that we are counting invalid human guesses in the number of attempts.
+    # We are using this loop so that we are not counting invalid human guesses in the number of attempts.
     while True:
         # Check if the human guess is a number, if it is a number, check if it is within the range
         if not str(human_guess).isdigit() or int(human_guess) < RANGE[0] or int(human_guess) > RANGE[1]:
@@ -60,11 +61,13 @@ while not win:
 
         # Else case -> Valid human guess.
         else:
+            # Since this is a valid guess, increase number of attempts
+            attempts += 1
             # Convert human guess from string -> integer
             human_guess = int(human_guess)
             # Exit the while loop
             break
-
+    
     # Add logic to see if user's number is bigger, smaller, or equal than computer's guess
     if human_guess > COMPUTER_PICK:
         print("Your guess is bigger than computer's pick.")
