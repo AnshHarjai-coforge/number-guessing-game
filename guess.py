@@ -5,8 +5,6 @@ import time
 DEBUG_SECRET = None  # For testing, set to a number such as 42. Set back to None before your final commit.
 TIME_LIMIT = 60       # Seconds allowed in Time Challenge mode
 
-# Range sets the lower and upper bound for the guessing game
-RANGE = [1, 50]
 
 # If debug secret has a value, set the computer pick equal to it, otherwise keep it random.
 # This is done for testing multiple computer guesses for manual testing
@@ -42,6 +40,12 @@ while difficulty_level not in valid_difficulties:
     print(f"{difficulty_level} is not a valid difficulty level.")
     difficulty_level = input("Please enter a difficulty level for your game: easy -> 1, medium -> 2 or hard -> 3")
 
+# Set a range dictionary based on difficulty level
+RANGE = {
+    "1": [1, 50],
+    "2": [1, 100],
+    "3": [1, 500],
+}
 
 # ---------- Choose a mode ----------
 # Goal: keep asking until the player picks Classic or Time Challenge.
