@@ -5,18 +5,6 @@ import time
 DEBUG_SECRET = None  # For testing, set to a number such as 42. Set back to None before your final commit.
 TIME_LIMIT = 60       # Seconds allowed in Time Challenge mode
 
-# Range sets the lower and upper bound for the guessing game
-RANGE = [1, 50]
-
-# If debug secret has a value, set the computer pick equal to it, otherwise keep it random.
-# This is done for testing multiple computer guesses for manual testing
-if DEBUG_SECRET is not None:
-    COMPUTER_PICK = DEBUG_SECRET
-else:
-    COMPUTER_PICK = random.randint(RANGE[0], RANGE[1])
-
-# Maximum number of attempts a user can make in one game.
-# NUM_ATTEMPTS = 10
 
 # Count How many attempts it takes a human to win
 attempts = 0
@@ -32,7 +20,44 @@ print("Welcome to the Number Guessing Game")
 
 # ---------- Choose a level ----------
 # Goal: keep asking until the player picks a valid level, then set the range and attempt limit.
+difficulty_level = input("Enter a difficulty level for your game: easy -> 1, medium -> 2 or hard -> 3: ")
 
+# Make a hash-map with the valid options for difficulty level
+valid_difficulties = {"1": "Easy", "2": "Medium", "3": "Hard"}
+
+# Keep on prompting the user to enter a valid difficulty level
+while difficulty_level not in valid_difficulties:
+    print(f"{difficulty_level} is not a valid difficulty level.")
+    difficulty_level = input("Please enter a difficulty level for your game: easy -> 1, medium -> 2 or hard -> 3: ")
+
+print(f"\n{valid_difficulties[difficulty_level]} Level Difficulty Chosen")
+# Set a range dictionary based on difficulty level
+# maps: difficulty_level -> [min_element, maximum_element]
+RANGE = {
+    "1": [1, 50],
+    "2": [1, 100],
+    "3": [1, 500],
+}
+
+# Set maximum number of attempts for a user based on difficulty level
+# maps: difficulty_level -> maximum_no_of_attempts
+MAX_ATTEMPTS = {
+    "1": 10,
+    "2": 8, 
+    "3": 10,
+}
+
+minimum_number, maximum_number = RANGE[difficulty_level]
+maximum_attempts = MAX_ATTEMPTS[difficulty_level]
+
+# If debug secret has a value, set the computer pick equal to it, otherwise keep it random.
+# This is done for testing multiple computer guesses for manual testing
+if DEBUG_SECRET is not None:
+    COMPUTER_PICK = DEBUG_SECRET
+else:
+    COMPUTER_PICK = random.randint(minimum_number, maximum_number)
+
+    
 # ---------- Choose a mode ----------
 # Goal: keep asking until the player picks Classic or Time Challenge.
 
@@ -42,22 +67,19 @@ print("Welcome to the Number Guessing Game")
 # ---------- Guess loop ----------
 # Goal: keep asking for guesses until the player wins, runs out of attempts, or runs out of time.
 
-# A while loop that ends when the user wins.
-while not win:
-
-    # print(f"\nYou have {NUM_ATTEMPTS} attempts remaining.")
-    # NUM_ATTEMPTS -= 1
+# A while loop that ends when the user finishes all attempts or if the user wins.
+while attempts < maximum_attempts and not win:
     
-    print(f"\nThis is your {attempts + 1 } attempt\n")
+    print(f"\nYou have {maximum_attempts - attempts } attempts remaining.\n")
 
-    human_guess = input(f"Enter a number between {RANGE[0]} and {RANGE[1]}.  ")
+    human_guess = input(f"Enter a number between {minimum_number} and {maximum_number}.  ")
 
     # This loop ends as soon as the human enters a valid number inside the range.
     # We are using this loop so that we are not counting invalid human guesses in the number of attempts.
     while True:
         # Check if the human guess is a number, if it is a number, check if it is within the range
-        if not str(human_guess).isdigit() or int(human_guess) < RANGE[0] or int(human_guess) > RANGE[1]:
-            human_guess = input(f"Please enter a number between {RANGE[0]} and {RANGE[1]}.  ")
+        if not str(human_guess).isdigit() or int(human_guess) < minimum_number or int(human_guess) > maximum_number:
+            human_guess = input(f"Please enter a number between {minimum_number} and {maximum_number}.  ")
 
         # Else case -> Valid human guess.
         else:
@@ -82,3 +104,5 @@ while not win:
 # Goal: show the result that matches how the round ended.
 if win:
     print(f"You have won the game in {attempts} attempts!")
+else:
+    print(f"You ran out of attempts this time! Try again on a lower difficulty.")
