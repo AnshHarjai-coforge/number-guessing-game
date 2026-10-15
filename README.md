@@ -1,5 +1,11 @@
 # Number Guessing Game
 
+## Steps to run the game
+1. Clone this repository: `git clone https://github.com/AnshHarjai-coforge/number-guessing-game.git`
+2. Navigate to the project directory: `cd number-guessing-game`
+3. Run the game: `python3 guess.py`
+
+
 ## Testing Plan for classic game branch
 1. Enter a number out of the range in human_guess
 2. Enter a character in human_guess
