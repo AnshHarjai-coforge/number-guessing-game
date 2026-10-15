@@ -1,5 +1,11 @@
 # Number Guessing Game
 
+## Steps to run the game
+1. Clone this repository: `git clone https://github.com/AnshHarjai-coforge/number-guessing-game.git`
+2. Navigate to the project directory: `cd number-guessing-game`
+3. Run the game: `python3 guess.py`
+
+
 ## Testing Plan for classic game branch
 1. Enter a number out of the range in human_guess
 2. Enter a character in human_guess
@@ -20,3 +26,7 @@ Test Plan for difficulty level:
 1. Enter invalid game modes -> strings, empty string, numbers except (1, 2, or 3), special characters.
 2. Make sure that the timer is only activate when the user selects time challenge game mode.
 3. Check if the user is able to win a game when the timer has expired even with a correct answer.
+4. Test negative numbers in all inputs fields.
+
+## Test Plan Observations
+- All test cases passed, and all outputs were expected.
