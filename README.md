@@ -20,3 +20,7 @@ Test Plan for difficulty level:
 1. Enter invalid game modes -> strings, empty string, numbers except (1, 2, or 3), special characters.
 2. Make sure that the timer is only activate when the user selects time challenge game mode.
 3. Check if the user is able to win a game when the timer has expired even with a correct answer.
+4. Test negative numbers in all inputs fields.
+
+## Test Plan Observations
+- All test cases passed, and all outputs were expected.
